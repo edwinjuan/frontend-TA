@@ -13,7 +13,7 @@
                 class="align-self-center" 
                 style="background-color: #16347A; color: white; margin-right: 40px;" 
                 @click="addHandler" 
-              >Tambah Kelas</v-btn>
+              >Add</v-btn>
             </v-card>
           </div>
 
@@ -45,6 +45,7 @@
                 </tr>
               </thead>
               <tbody>
+                <template v-if="dataAvail">
                 <tr
                   v-for="item in sortedItems"
                   :key="item.class_id"
@@ -60,6 +61,12 @@
                     <!-- <v-btn small @click="deleteHandler(item.class_id)">delete</v-btn> -->
                   </td>
                 </tr>
+                </template>
+                <template v-else>
+                  <tr>
+                    <td>Data tidak ditemukan</td>
+                  </tr>
+                </template>
               </tbody>
             </v-table>
           </v-card>
@@ -158,6 +165,7 @@ export default {
     load: false,
     color: '',
     snackbar: false,
+    dataAvail: false,
     error_message: '',
     inputType: 'Tambah',
     dialog: false,
@@ -188,7 +196,11 @@ export default {
         }
       }).then(response => {
         this.kelases = response.data.data;
-      })
+        this.dataAvail = true;
+      }).catch(error => {
+          this.error_message = error.response.data.message;
+          this.dataAvail = false;
+        });
     },
     deleteHandler(id) {
       this.deleteID = id;
@@ -223,6 +235,7 @@ export default {
         this.load = false;
         this.close();
         this.inputType = "Tambah";
+        this.readData();
       }).catch(error => {
         this.error_message = error.response.data.message;
         this.color = "red";
@@ -256,8 +269,10 @@ export default {
           this.color = 'green';
           this.snackbar = true;
           this.load = false;
+          this.dataAvail = true;
           this.close();
           this.resetForm();
+          this.readData();
         }).catch(error => {
           this.error_message = error.response.data.message;
           this.color = 'red';

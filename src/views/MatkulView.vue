@@ -13,7 +13,7 @@
                     class="align-self-center" 
                     style="background-color: #16347A; color: white;" 
                     @click="addHandler" 
-                    >Tambah Mata Kuliah</v-btn>
+                    >Add</v-btn>
                 </v-col>
             </v-row>
           </v-card>
@@ -168,7 +168,7 @@ export default {
         save() {
             if (this.inputType == 'Tambah') {
                 this.load = true;
-                this.$api.post("/matkul/create/", this.form, {
+                this.$api.post("/matkul/create", this.form, {
                 headers: {
                     'Authorization' : 'Bearer ' + localStorage.getItem('token')
                 }
@@ -180,6 +180,7 @@ export default {
                     this.close();
                     this.resetForm();
                 }).catch(error => {
+                    alert(error.response)
                     this.error_message = error.response.data.message;
                     this.color = 'red';
                     this.snackbar = true;
@@ -187,7 +188,6 @@ export default {
                     });
             } else {
                 this.load = true;
-                alert(this.inputType);
                 this.$api.put("/matkul/update/" + this.editID, this.form, {
                 headers: {
                     'Authorization' : 'Bearer ' + localStorage.getItem('token')

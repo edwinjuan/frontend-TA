@@ -42,7 +42,7 @@
                             />
                           </v-form>
                           <div style="text-align: center;">
-                            <button>Lupa Password ?</button>
+                            <button></button>
                           </div>
                         </v-card-text>
                         <div class="text-center mt-3" style="margin-bottom: 20px;">
@@ -183,6 +183,8 @@ export default {
             this.load = false;
           } else {
             this.error_message = response.data.message;
+            this.color = "green";
+            this.snackbar = true;
             this.load = false;
             localStorage.setItem("id", response.data.user.users_id)
             localStorage.setItem("token", response.data.access_token);
@@ -190,10 +192,16 @@ export default {
             localStorage.setItem("email", response.data.user.email);
             localStorage.setItem("is_admin", response.data.user.is_admin);
             this.clearLogin();
-            alert("Login Berhasil !");
-            this.$router.push({
-              name: "home",
-            });
+            if (response.data.user.is_admin == 1){
+              this.$router.push({
+                name: "matkul",
+              });
+            } else {
+              this.$router.push({
+                name: "home",
+              });
+            }
+            
           }
         }).catch((error) => {
           this.error_message = error.response.data.message;
@@ -213,10 +221,12 @@ export default {
           password: this.passwordRegis
         })
         .then((response) => {
+          alert('Register Berhasil, Silahkan cek Email');
           this.error_message = response.data.message;
+          this.color = "green";
+          this.snackbar = true;
           this.load = false;
           this.clearRegis();
-          alert(response.data.message);
           // this.$router.push({
           //      name: "VerifyEmail",
           // });
@@ -238,7 +248,7 @@ export default {
           // });
           //this.step = 1;
         }).catch((error) => {
-          alert('masuk sini error');
+          alert('Register Berhasil, Silahkan cek Email!');
           this.error_message = error.response.data.message;
           this.color = "red";
           this.snackbar = true;

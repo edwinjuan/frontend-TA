@@ -24,7 +24,7 @@
                 class="align-self-center" 
                 style="background-color: #16347A; color: white;" 
                 @click="addHandler" 
-              >Tambah CPMK</v-btn>
+              >Add</v-btn>
             </v-col>
           </v-row>
         </v-card>
@@ -215,6 +215,7 @@ export default {
       this.resetForm();
       this.dialog = true;
       this.inputType = "Tambah";
+      this.selectInputAble = true;
       this.matkulInput = null;
     },
     editHandler(item) {
@@ -277,6 +278,9 @@ export default {
             this.load = false;
             this.close();
             this.resetForm();
+            if (this.matkulID != null) {
+              this.readCPMK();
+            }
           }).catch(error => {
             this.error_message = error.response.data.message;
             this.color = 'red';

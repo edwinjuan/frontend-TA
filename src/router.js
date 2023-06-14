@@ -20,7 +20,7 @@ const routes = [
     children: [
       //Card class
       {
-        path: '/',
+        path: '/home',
         name: 'home',
         meta: { title: 'home' },
         component: HomeView
@@ -97,10 +97,16 @@ router.beforeEach((to, from, next) => {
     if (to.meta.requiresAuth && token == null) {
       next("/login");
     } else if (to.name == "loginView" && token != null) {
-      if (isAdmin != null) {
+      if (isAdmin === "1") {
         next("/matkul");
       } else {
-        next("/");
+        next("/home");
+      }
+    } else if (to.name == "layout" && token != null){
+      if (isAdmin === "1") {
+        next("/matkul");
+      } else {
+        next("/home");
       }
     } else {
       next();

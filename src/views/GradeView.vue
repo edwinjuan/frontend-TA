@@ -34,14 +34,14 @@
                 class="align-self-center" 
                 style="background-color: #16347A; color: white;" 
                 @click="uploadHandler" 
-              >Import Nilai</v-btn>
+              >Import</v-btn>
             </v-col>
             <v-col md="1.5" class="d-flex justify-center align-center">
               <v-btn 
                 class="align-self-center" 
                 style="background-color: #16347A; color: white;" 
                 @click="addHandler" 
-              >Tambah Nilai</v-btn>
+              >Add</v-btn>
             </v-col>
           </v-row>
         </v-card>

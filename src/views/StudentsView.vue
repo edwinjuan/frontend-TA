@@ -32,14 +32,14 @@
                 class="align-self-center" 
                 style="background-color: #16347A; color: white;" 
                 @click="uploadHandler" 
-              >Upload Absen File</v-btn>
+              >Upload Excel</v-btn>
             </v-col>
             <v-col md="2" class="d-flex justify-center align-center">
               <v-btn 
                 class="align-self-center" 
                 style="background-color: #16347A; color: white;" 
                 @click="addHandler" 
-              >Tambah Students</v-btn>
+              >Add</v-btn>
             </v-col>
           </v-row>
         </v-card>
@@ -86,7 +86,7 @@
       <v-dialog v-model="dialog" persistent max-width="500px">
         <v-card style="width: 600px">
             <v-card-title class="text-center">
-                <span>{{ formtitle }} Students</span>
+                <span>{{ formtitle }} List Mahasiswa</span>
             </v-card-title>
             <v-card-text>
                 <v-container>

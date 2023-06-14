@@ -1,13 +1,22 @@
 <template>
   
     <v-app>
+      <v-overlay
+        :value="drawer"
+        z-index="4"
+      >
+      </v-overlay>
       <v-navigation-drawer
-      style="background-color: #16347A;" width="256" app permanent :absolute="true">
+      style="background-color: #16347A;" v-model="drawer" width="256" app clipped hide-overlay>
         <v-list>
           <v-list-item prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg">
-          <v-list-item-title style="color: white;" v-text="name"></v-list-item-title>
-          <v-list-item-subtitle style="color: white;" v-text="email"></v-list-item-subtitle>
+            <v-list-item-title style="color: white;" v-text="name"></v-list-item-title>
+            <v-list-item-subtitle style="color: white;" v-text="email"></v-list-item-subtitle>
+            <template v-slot:append>
+              <v-icon style="color: white;" @click.stop="drawer = !drawer">mdi-menu</v-icon>
+            </template>
           </v-list-item>
+          
         </v-list>
 
         <v-divider thickness="2"></v-divider>
@@ -21,6 +30,7 @@
           link
           tag="router-link"
           :to="item.to"
+          @click="selection = item.title"
           >
             
             <v-list-item-content>
@@ -42,6 +52,12 @@
         </template>
       </v-navigation-drawer>
 
+      <v-toolbar density="compact">
+        <v-btn icon style="background-color: #16347A;">
+          <v-icon style="color: white;" @click.stop="drawer = !drawer">mdi-menu</v-icon>
+        </v-btn>
+      </v-toolbar>
+
       <v-main class="bg-grey-lighten-3 fullheight pa-5" :style="{ 'overflow-y': 'auto' }">
         <router-view></router-view>
       </v-main>
@@ -61,6 +77,7 @@
 <style scoped>
     .fullheight {
         min-height: 100vh !important;
+        margin-top: -20px;
     }
 </style>
 
@@ -70,6 +87,8 @@ import { Icon } from '@iconify/vue';
 
 export default {
     data: () => ({
+      selection: '',
+      drawer: true,
       name: localStorage.getItem('name'),
       email: localStorage.getItem('email'),
       isAdmin: false,
@@ -103,7 +122,7 @@ export default {
         } else {
           this.isAdmin = false;
           this.items = [
-            { title: "Kelas", to: "/", icon: "eos-icons:storage-class-outlined" },
+            { title: "Kelas", to: "/home", icon: "eos-icons:storage-class-outlined" },
             { title: "Mahasiswa", to: "/students", icon: "mdi:people-group" },
             { title: "Tugas", to: "/assignment", icon: "fluent:learning-app-20-filled" },
             { title: "Nilai Mahasiswa", to: "/grade", icon: "fluent-mdl2:upgrade-analysis" },

@@ -24,7 +24,7 @@
                 class="align-self-center" 
                 style="background-color: #16347A; color: white;" 
                 @click="addHandler" 
-              >Tambah Assignment</v-btn>
+              >Add</v-btn>
             </v-col>
           </v-row>
         </v-card>
@@ -408,21 +408,6 @@ export default {
           this.snackbar = true;
         } else {
           this.load = true;
-          //check jika jumlah weight sudah sesuai dan pindahkan ke list
-          // let total = 0;
-          // this.cpmk_percent_form = [];
-          // for (let i=0; i<this.cpmk_percentage_list.length; i++) {
-          //   if (this.cpmk_percentage_list[i].value != null) {
-          //     total = total + this.cpmk_percentage_list[i].value;
-          //     this.cpmk_percent_form.push(this.cpmk_percentage_list[i].value);
-          //   } else {
-          //     this.cpmk_percent_form.push(0);
-          //   }
-          
-          // // check jika nilai cpmk bobot sesuai dengan bobot total
-          // if (total == this.form.percentage) {
-          //   // masukin list bobot cpmk ke dalam form input database
-          //   this.form.cpmk_percent_list = '{' + String(this.cpmk_percent_form) + '}';
           // masukin list cpmk ke dalam form input database
           this.form.cpmk_list = '{' + String(this.selectedCheckbox.sort()) + '}';
           this.$api.post("/assignment/create/" + this.selectedCheckbox[0] + "/" + this.classes[this.classInput].class_id, this.form, {
