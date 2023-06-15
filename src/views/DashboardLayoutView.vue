@@ -76,7 +76,7 @@
 
 <style scoped>
     .fullheight {
-        min-height: 100vh !important;
+        min-height: 90vh !important;
         margin-top: -20px;
     }
 </style>

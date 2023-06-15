@@ -32,7 +32,7 @@
                 class="align-self-center" 
                 style="background-color: #16347A; color: white;" 
                 @click="uploadHandler" 
-              >Upload Excel</v-btn>
+              >Import</v-btn>
             </v-col>
             <v-col md="2" class="d-flex justify-center align-center">
               <v-btn 
@@ -215,7 +215,7 @@ export default {
     deleteID: null,
     editID: null,
     page: 1,
-    itemsPerPage: 7,
+    itemsPerPage: 6,
   }),
   methods: {
     readDataClass() {

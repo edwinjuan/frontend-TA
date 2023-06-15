@@ -42,7 +42,7 @@
                 .catch((error) => {
                   alert(error.response.data.message);
                 });
-            } else {
+            }  else {
               alert("Link sudah tidak berlaku!");
               this.$router.push('/login');
             }
