@@ -32,14 +32,14 @@
             <v-col md="1.5" class="d-flex justify-center align-right">
               <v-btn 
                 class="align-self-center" 
-                style="background-color: #16347A; color: white;" 
+                style="background-color: #16347A; color: white; width: 100px;" 
                 @click="uploadHandler" 
               >Import</v-btn>
             </v-col>
             <v-col md="1.5" class="d-flex justify-center align-center">
               <v-btn 
                 class="align-self-center" 
-                style="background-color: #16347A; color: white;" 
+                style="background-color: #16347A; color: white; width: 100px;" 
                 @click="addHandler" 
               >Add</v-btn>
             </v-col>
@@ -113,7 +113,7 @@
                     <v-select v-if="inputType == 'Tambah'"
                       style="margin-left: 10px;"
                       v-model="assignmentIDInput"
-                      label="Assignment"
+                      label="Tugas"
                       :items="assignmentInputOption"
                       @update:modelValue="readStudentsClass"
                     ></v-select>
@@ -154,7 +154,7 @@
                   <v-select
                     style="margin-left: 10px;"
                     v-model="assignmentIDInput"
-                    label="Assignment"
+                    label="Tugas"
                     :items="assignmentInputOption"
                   ></v-select>
                   <v-file-input
@@ -259,7 +259,7 @@ export default {
     },
     file: null,
     page: 1,
-    itemsPerPage: 7,
+    itemsPerPage: 6,
 
   }),
   methods: {
@@ -295,10 +295,15 @@ export default {
       }).then(response => {
         this.assignmentID = null;
         this.assignment = response.data.data;
+        this.dataAvail = false;
         this.moveAssignment();
         this.readCPMK();
       }).catch((error) => {
         this.error_message = error.response.data.message;
+        this.assignmentID = null;
+        this.assignment = [];
+        this.assignmentOption = [];
+        this.dataAvail = false;
       })
     },
     moveAssignment() {
@@ -320,6 +325,9 @@ export default {
         this.readCPMKInput()
       }).catch((error) => {
         this.error_message = error.response.data.message;
+        this.assignmentIDInput = null;
+        this.assignmentInput = [];
+        this.assignmentInputOption = [];
       })
     },
     moveAssignmentInput() {
@@ -633,7 +641,6 @@ export default {
           this.close();
           this.readGrade();
         }).catch(error => {
-          alert(error.response.data.message)
           this.error_message = error.response.data.message;
           this.color = 'red';
           this.snackbar = true;

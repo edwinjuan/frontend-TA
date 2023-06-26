@@ -22,7 +22,7 @@
             <v-col md="3" class="d-flex justify-center align-center">
               <v-btn
                 class="align-self-center" 
-                style="background-color: #16347A; color: white;" 
+                style="background-color: #16347A; color: white; width: 100px;" 
                 @click="addHandler" 
               >Add</v-btn>
             </v-col>
@@ -87,7 +87,7 @@
                 <v-container>
                     <v-select
                       v-model="classInput"
-                      label="Mata Kuliah"
+                      label="Kelas"
                       :items="classesOption"
                       @update:modelValue="readCPMKInput"
                     ></v-select>
@@ -98,7 +98,7 @@
                         <v-checkbox v-model="selectedCheckbox" :label="item.label" :value="item.value"></v-checkbox>
                       </div>
                     </v-card>
-                    <v-textarea v-model="form.description" label="Description"></v-textarea>
+                    <v-textarea v-model="form.description" label="Deskripsi"></v-textarea>
                 </v-container>
             </v-card-text>
             <v-card-action class="text-right">
@@ -418,7 +418,7 @@ export default {
             this.error_message = response.data.message;
             this.color = 'green';
             this.snackbar = true;
-            
+            this.readAssignment();
           }).catch(error => {
             this.error_message = error.response.data.message;
             this.color = 'red';
@@ -428,9 +428,9 @@ export default {
           this.load = false;
           this.close();
           this.resetForm();
-          this.readAssignment();
-          // if (this.dataAvail) {
-          //   this.readAssignment();
+          
+          // if (this.classID != null) {
+          //    this.readAssignment();
           // }
           
         }

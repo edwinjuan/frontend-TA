@@ -22,7 +22,7 @@
             <v-col md="3" class="d-flex justify-center align-center">
               <v-btn v-if="admin == 1"
                 class="align-self-center" 
-                style="background-color: #16347A; color: white;" 
+                style="background-color: #16347A; color: white; width: 100px;" 
                 @click="addHandler" 
               >Add</v-btn>
             </v-col>

@@ -21,7 +21,7 @@
             <v-col md="1" class="d-flex justify-center align-center" v-if="dataAvail">
               <v-btn
                 class="align-self-center" 
-                style="background-color: #16347A; color: white;" 
+                style="background-color: #16347A; color: white; width: 100px;" 
                 @click="resetHandler" 
               >Reset</v-btn>
             </v-col>
@@ -30,14 +30,14 @@
             <v-col md="2" class="d-flex justify-center align-center">
               <v-btn 
                 class="align-self-center" 
-                style="background-color: #16347A; color: white;" 
+                style="background-color: #16347A; color: white; width: 100px;" 
                 @click="uploadHandler" 
               >Import</v-btn>
             </v-col>
             <v-col md="2" class="d-flex justify-center align-center">
               <v-btn 
                 class="align-self-center" 
-                style="background-color: #16347A; color: white;" 
+                style="background-color: #16347A; color: white; width: 100px;" 
                 @click="addHandler" 
               >Add</v-btn>
             </v-col>
@@ -53,7 +53,7 @@
                 NPM
               </th>
               <th class="text-left" style="color: aliceblue;">
-                Name
+                Nama
               </th>
               <th class="text-left" style="color: aliceblue;">
                 Actions
@@ -96,7 +96,7 @@
                     :items="classesOption"
                   ></v-select>
                     <v-text-field v-model="form.npm" label="NPM"></v-text-field>
-                    <v-text-field v-model="form.name" label="Name"></v-text-field>
+                    <v-text-field v-model="form.name" label="Nama"></v-text-field>
                 </v-container>
             </v-card-text>
             <v-card-action class="text-right">

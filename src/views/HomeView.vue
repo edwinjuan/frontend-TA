@@ -11,7 +11,7 @@
               <v-spacer></v-spacer>
               <v-btn 
                 class="align-self-center" 
-                style="background-color: #16347A; color: white; margin-right: 40px;" 
+                style="background-color: #16347A; color: white; margin-right: 40px; width: 100px;" 
                 @click="addHandler" 
               >Add</v-btn>
             </v-card>
@@ -21,8 +21,10 @@
             <v-table>
               <thead style="background-color: gray;">
                 <tr>
-                  <th class="text-left" style="color: aliceblue;">
+                  <th class="text-left sortable" style="color: aliceblue;" @click="sort('tahun')">
                     Tahun
+                    <v-icon icon="mdi-arrow-up" v-if="sortBy === 'tahun' && sortDesc"></v-icon>
+                    <v-icon icon="mdi-arrow-down" v-if="sortBy === 'tahun' && !sortDesc"></v-icon>
                   </th>
                   <th class="text-left sortable" style="color: aliceblue;" @click="sort('semester')">
                     Semester
