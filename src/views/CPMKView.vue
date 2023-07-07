@@ -83,6 +83,7 @@
                       v-model="matkulInput"
                       label="Mata Kuliah"
                       :items="matkulsOption"
+                      @update:modelValue="readCPMKInput"
                     ></v-select>
                     <v-textarea v-model="form.description" label="Deskripsi"></v-textarea>
                     <v-text-field v-model.number="form.percentage" type="number" label="Bobot" suffix="%"></v-text-field>
@@ -159,6 +160,8 @@ export default {
     deleteID: null,
     editID: null,
     dialogConfirm: false,
+    thresholdPercent: 0,
+    totalPercent: 0,
   }),
   methods: {
     readDataMatkul() {
@@ -190,7 +193,29 @@ export default {
         this.dataAvail = true;
       }).catch(() => {
         this.dataAvail = false;
-        this.totalPercent = 0;
+      })
+    },
+    readCPMKInput() {
+      var split = this.matkulInput.split(" ");
+      var code = split[0]
+      for (let i=0; i<this.matkuls.length; i++) {
+        if (this.matkuls[i].code == code){
+          var id = this.matkuls[i].matkul_id;
+          break;
+        }
+      }
+      this.$api.get("/cpmk/showMatkul/" + id, {
+        headers: {
+          'Authorization' : 'Bearer ' + localStorage.getItem('token')
+        }
+      }).then(response => {
+        var cpmk = response.data.data;
+        this.thresholdPercent = 0;
+        for (let i=0; i<cpmk.length; i++) {
+          this.thresholdPercent = this.thresholdPercent + Number(cpmk[i].percentage)
+        }
+      }).catch(() => {
+        this.thresholdPercent = 0;
       })
     },
     move() {
@@ -224,6 +249,12 @@ export default {
       this.editID = item.cpmk_id;
       this.form.description = item.description;
       this.form.percentage = item.percentage;
+      this.totalPercent = 0;
+      for (let i=0; i<this.cpmkList.length; i++) {
+        if (this.cpmkList[i].cpmk_id != this.editID) {
+          this.totalPercent = this.totalPercent + Number(this.cpmkList[i].percentage)
+        }
+      }
       this.dialog = true;
     },
     deleteHandler(id) {
@@ -256,7 +287,11 @@ export default {
         if (this.matkulInput == null) {
           this.snackbar = true;
           this.color = "red";
-          this.error_message = "Choose Class First";
+          this.error_message = "Pilih Mata Kuliah Dahulu";
+        } else if (this.thresholdPercent + this.form.percentage > 100) {
+          this.snackbar = true;
+          this.color = "red";
+          this.error_message = "Bobot Total Melebihi 100%";
         } else {
           this.load = true;
           var split = this.matkulInput.split(" ");
@@ -289,32 +324,38 @@ export default {
           });
         }
       } else {
-        this.load = false;
-        this.$api.put("cpmk/update/" + this.editID, this.form, {
-          headers: {
-            'Authorization' : 'Bearer ' + localStorage.getItem('token')
-          }
-        }).then(response => {
-          this.error_message = response.data.message;
-          this.color = 'green';
+        if (Number(this.form.percentage) + this.totalPercent > 100) {
           this.snackbar = true;
+          this.color = "red";
+          this.error_message = "Bobot Total Melebihi 100%";
+        } else {
           this.load = false;
-          this.inputType = "Tambah";
-          this.selectInputAble = true;
-          this.close();
-          this.resetForm();
-          this.readCPMK();
-        }).catch(error => {
-          this.error_message = error.response.data.message;
-          this.color = 'red';
-          this.snackbar = true;
-          this.load = false;
-          this.inputType = "Tambah";
-          this.selectInputAble = true;
-          this.close();
-          this.resetForm();
-          this.readCPMK();
-        });
+          this.$api.put("cpmk/update/" + this.editID, this.form, {
+            headers: {
+              'Authorization' : 'Bearer ' + localStorage.getItem('token')
+            }
+          }).then(response => {
+            this.error_message = response.data.message;
+            this.color = 'green';
+            this.snackbar = true;
+            this.load = false;
+            this.inputType = "Tambah";
+            this.selectInputAble = true;
+            this.close();
+            this.resetForm();
+            this.readCPMK();
+          }).catch(error => {
+            this.error_message = error.response.data.message;
+            this.color = 'red';
+            this.snackbar = true;
+            this.load = false;
+            this.inputType = "Tambah";
+            this.selectInputAble = true;
+            this.close();
+            this.resetForm();
+            this.readCPMK();
+          });
+        }
       }
     },
     resetForm() {
